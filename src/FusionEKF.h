@@ -8,6 +8,7 @@
 #include <fstream>
 #include "kalman_filter.h"
 #include "tools.h"
+#include <math.h>
 
 class FusionEKF {
 public:
@@ -37,6 +38,10 @@ private:
 
   // previous timestamp
   long long previous_timestamp_;
+
+  //acceleration noise components
+  float noise_ax;
+  float noise_ay;
 
   // tool object used to compute Jacobian and RMSE
   Tools tools;

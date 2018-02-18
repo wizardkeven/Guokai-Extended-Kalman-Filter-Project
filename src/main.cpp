@@ -90,7 +90,7 @@ int main()
           		iss >> timestamp;
           		meas_package.timestamp_ = timestamp;
           }
-          float x_gt;
+        float x_gt;
     	  float y_gt;
     	  float vx_gt;
     	  float vy_gt;
@@ -125,17 +125,23 @@ int main()
     	  estimations.push_back(estimate);
 
     	  VectorXd RMSE = tools.CalculateRMSE(estimations, ground_truth);
+        //check rmse
+        cout<<"\n\n";
+        cout<<"rmse_x: "<< RMSE(0)<<"\n";
+        cout<<"rmse_y: "<< RMSE(1)<<"\n";
+        cout<<"rmse_vx: "<< RMSE(2)<<"\n";
+        cout<<"rmse_vy: "<< RMSE(3)<<endl;
 
-          json msgJson;
-          msgJson["estimate_x"] = p_x;
-          msgJson["estimate_y"] = p_y;
-          msgJson["rmse_x"] =  RMSE(0);
-          msgJson["rmse_y"] =  RMSE(1);
-          msgJson["rmse_vx"] = RMSE(2);
-          msgJson["rmse_vy"] = RMSE(3);
-          auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
-          // std::cout << msg << std::endl;
-          ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
+        json msgJson;
+        msgJson["estimate_x"] = p_x;
+        msgJson["estimate_y"] = p_y;
+        msgJson["rmse_x"] =  RMSE(0);
+        msgJson["rmse_y"] =  RMSE(1);
+        msgJson["rmse_vx"] = RMSE(2);
+        msgJson["rmse_vy"] = RMSE(3);
+        auto msg = "42[\"estimate_marker\"," + msgJson.dump() + "]";
+        // std::cout << msg << std::endl;
+        ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
 	  
         }
       } else {
